@@ -16,6 +16,7 @@
 package com.google.cloud.opentelemetry.auto;
 
 import com.google.auto.service.AutoService;
+import com.google.cloud.opentelemetry.trace.TraceConfiguration;
 import com.google.cloud.opentelemetry.trace.TraceExporter;
 import io.opentelemetry.sdk.autoconfigure.spi.ConfigProperties;
 import io.opentelemetry.sdk.autoconfigure.spi.traces.ConfigurableSpanExporterProvider;
@@ -28,7 +29,8 @@ public class GoogleCloudSpanExporterFactory implements ConfigurableSpanExporterP
   @Override
   public SpanExporter createExporter(ConfigProperties config) {
     try {
-      return TraceExporter.createWithDefaultConfiguration();
+      return TraceExporter.createWithConfiguration(
+          TraceConfiguration.builder().setProjectId("otel-starter-project").build());
     } catch (IOException ex) {
       throw new RuntimeException(ex);
     }

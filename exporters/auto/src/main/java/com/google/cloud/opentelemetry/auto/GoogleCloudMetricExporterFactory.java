@@ -16,6 +16,7 @@
 package com.google.cloud.opentelemetry.auto;
 
 import com.google.auto.service.AutoService;
+import com.google.cloud.opentelemetry.metric.MetricConfiguration;
 import com.google.cloud.opentelemetry.metric.MetricExporter;
 import io.opentelemetry.sdk.autoconfigure.spi.ConfigProperties;
 import io.opentelemetry.sdk.autoconfigure.spi.metrics.ConfigurableMetricExporterProvider;
@@ -23,10 +24,12 @@ import java.io.IOException;
 
 @AutoService(ConfigurableMetricExporterProvider.class)
 public class GoogleCloudMetricExporterFactory implements ConfigurableMetricExporterProvider {
+
   @Override
   public MetricExporter createExporter(ConfigProperties config) {
     try {
-      return MetricExporter.createWithDefaultConfiguration();
+      return MetricExporter.createWithConfiguration(
+          MetricConfiguration.builder().setProjectId("otel-starter-project").build());
     } catch (IOException ex) {
       throw new RuntimeException(ex);
     }
