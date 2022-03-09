@@ -60,8 +60,8 @@ import com.google.monitoring.v3.TypedValue;
 import com.google.protobuf.Any;
 import com.google.protobuf.Timestamp;
 import io.opentelemetry.sdk.common.CompletableResultCode;
-import io.opentelemetry.sdk.metrics.data.DoubleSummaryData;
 import io.opentelemetry.sdk.metrics.data.MetricData;
+import io.opentelemetry.sdk.metrics.internal.data.ImmutableSummaryData;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Set;
@@ -253,7 +253,7 @@ public class MetricExporterTest {
                                                 .setSpanName(
                                                     "projects/"
                                                         + aProjectId
-                                                        + "/traces/traceId/spans/spanId")
+                                                        + "/traces/0000000000000000000000000000dead/spans/000000000000beef")
                                                 .build()))
                                     .addAttachments(
                                         Any.pack(
@@ -307,7 +307,7 @@ public class MetricExporterTest {
             "Metric Name",
             "description",
             "ns",
-            DoubleSummaryData.create(ImmutableList.of(aDoubleSummaryPoint)));
+            ImmutableSummaryData.create(ImmutableList.of(aDoubleSummaryPoint)));
 
     CompletableResultCode result = exporter.export(ImmutableList.of(metricData));
     verify(mockClient, times(0)).createMetricDescriptor(any());
