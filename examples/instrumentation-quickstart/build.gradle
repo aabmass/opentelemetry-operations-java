@@ -25,6 +25,9 @@ group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 description = 'OpenTelemetry instrumentation quickstart using Spring Boot'
 
+// Use newer log4j2 version
+ext['log4j2.version'] = '2.24.1'
+
 repositories {
 	mavenCentral()
 }
